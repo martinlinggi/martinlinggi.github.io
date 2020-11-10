@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR-Location</title>
+</head>
+
+<body>
+
+    <p id="demo"></p>
+
+    <script>
+        var x = document.getElementById("demo");
+
+        var locations = {
+            'fehraltorf': {latitude: 47.38534, longitude: 8.75018, station: "Fehraltorf"},
+            'egg-zh': {latitude: 47.30155, longitude: 8.68956, station: "Egg ZH"},
+            'pfaeffikon-zh': {latitude: 47.36716, longitude: 8.78490, station: "Pfäffikon ZH"},
+            'berikon-widen': {latitude: 47.36218, longitude: 8.36655, station: "Berikon Widen"},
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(checkPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function checkPosition(position) {
+            var url = new URL(window.location.href);
+            var locationId = url.searchParams.get("location");
+            if (locationId) {
+                var loc = locations[locationId];
+                var dy = 111300 * (loc.latitude - position.coords.latitude);
+                var dx = 71500 * (loc.longitude - position.coords.longitude);
+                var d = Math.sqrt(dx * dx + dy * dy);
+                if (d <= 2000) {
+                    x.innerHTML = 
+                        "Du bist in " + loc.station + " (Umkreis 2km)"
+                        "<br>Latitude: " + position.coords.latitude +
+                        "<br>Longitude: " + position.coords.longitude;
+                } else {
+                    x.innerHTML = 
+                        "Du bist NICHT in " + loc.station + " (Umkreis 2km)"
+                        "<br>Latitude: " + position.coords.latitude +
+                        "<br>Longitude: " + position.coords.longitude;
+                }
+            } else {
+                x.innerHTML = "No Location provided";
+            }
+
+        } 
+        window.onload = getLocation;
+    </script>
+</body>
+
+</html>
