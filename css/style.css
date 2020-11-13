@@ -1,0 +1,32 @@
+.logo {
+  height: 16px;
+  width: auto;
+}
+
+.alert-indicator {
+    height: 16px;
+    width: 16px;
+    border: solid 1px;
+    display: inline-block;
+  }
+
+.prio-1 {
+    background-color: #FF0000;
+}
+
+.prio-2 {
+    background-color: #FF7F00;
+}
+
+.prio-3 {
+    background-color: #FFFF00;
+}
+
+.prio-4 {
+    background-color: #BEFF00;
+}
+
+.prio-5 {
+    background-color: #00ff00;
+}
+
